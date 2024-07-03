@@ -1,7 +1,6 @@
 pipeline {
-    agent any
-    tools {
-        nodejs 'nodejs' // Use the name configured in Global Tool Configuration
+    agent {
+        docker { image 'node:20' }
     }
     stages {
         stage('Checkout') {
@@ -24,14 +23,17 @@ pipeline {
                 sh 'npm test'
             }
         }
-        stage('Deploy') {
+        stage('Build Docker Image') {
             steps {
                 script {
-                    // Kill any existing node process
-                    sh 'kill $(netstat -tuln | grep :3000) || true'
-                    // Run the application in the background
-                    sh 'nohup npm start &'
+                    docker.build("my-node-app:${env.BUILD_ID}")
                 }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying the application...'
+                // Add deployment steps here
             }
         }
     }
