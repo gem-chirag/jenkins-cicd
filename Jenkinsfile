@@ -28,7 +28,7 @@ pipeline {
             steps {
                 script {
                     // Kill any existing node process
-                    sh 'kill $(lsof -t -i:3000) || true'
+                    sh 'kill $(netstat -tuln | grep :3000) || true'
                     // Run the application in the background
                     sh 'nohup npm start &'
                 }
