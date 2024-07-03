@@ -1,9 +1,14 @@
 pipeline {
     agent any
     tools {
-        nodejs 'nodejs' // Define Node.js installation (name it appropriately)
+        nodejs 'nodejs' // Use the name configured in Global Tool Configuration
     }
     stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
         stage('Install Dependencies') {
             steps {
                 sh 'npm install'
@@ -21,8 +26,12 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying the application...'
-                // Add deployment steps here
+                script {
+                    // Kill any existing node process
+                    sh 'kill $(lsof -t -i:3000) || true'
+                    // Run the application in the background
+                    sh 'nohup npm start &'
+                }
             }
         }
     }
