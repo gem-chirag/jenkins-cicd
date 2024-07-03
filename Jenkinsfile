@@ -21,9 +21,8 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                script{
-                    sh 'npm start'
-                }
+                echo 'Deploying the application...'
+                // Add deployment steps here
             }
         }
     }
