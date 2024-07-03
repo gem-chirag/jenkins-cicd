@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        nodejs 'nodejs' // Use the name configured in Global Tool Configuration
+        nodejs 'nodejs'
     }
     stages {
         stage('Checkout') {
@@ -27,9 +27,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Kill any existing node process
                     sh 'kill $(lsof -t -i:3000) || true'
-                    // Run the application in the background
                     sh 'nohup npm start &'
                 }
             }
