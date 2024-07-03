@@ -23,7 +23,7 @@ pipeline {
             steps {
                 echo 'Deploying the application...'
                 script{
-                    sh 'nohup npm start &'
+                    sh 'npm start'
                 }
             }
         }
