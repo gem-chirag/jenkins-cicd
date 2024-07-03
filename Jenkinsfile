@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        docker { image 'node:20' }
-    }
+    agent any
     stages {
         stage('Checkout') {
             steps {
@@ -23,17 +21,10 @@ pipeline {
                 sh 'npm test'
             }
         }
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    docker.build("my-node-app:${env.BUILD_ID}")
-                }
-            }
-        }
         stage('Deploy') {
             steps {
                 echo 'Deploying the application...'
-                // Add deployment steps here
+                sh 'npm start'
             }
         }
     }
