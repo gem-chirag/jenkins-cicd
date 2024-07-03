@@ -20,9 +20,8 @@ pipeline {
             }
         }
         stage('Deploy') {
-            steps {
-                echo 'Deploying the application...'
-                sh 'npm start'
+            script{
+                sh 'nohup npm start &'
             }
         }
     }
