@@ -1,22 +1,25 @@
-node{
-    def nodejsTool = tool name: 'nodejs', type: 'NodeJS'
-    
-    env.PATH = "${nodejsTool}/bin:${env.PATH}"
+node {
+    // Specify the NodeJS tool
+    def nodejsHome = tool name: 'nodejs', type: 'NodeJS'
 
-    stage("Install Dependencies"){
-        sh 'npm install'
-    }
-
-    stage("Build"){
-        echo 'Building Application....'
-    }
-
-    stage("Test"){
-        echo 'All test passed'
+    stage('Install Dependencies') {
+        // Install dependencies
+        sh "${nodejsHome}/bin/npm install"
     }
     
-    stage("Deploy"){
-        echo 'Deploying the application....'
-        sh 'npm start'
+    stage('Build') {
+        // Build the application
+        echo 'Building the application...'
+    }
+    
+    stage('Test') {
+        // Run tests
+        echo 'All tests passed'
+    }
+    
+    stage('Deploy') {
+        // Deploy the application
+        echo 'Deploying the application...'
+        sh "${nodejsHome}/bin/npm start"
     }
 }
