@@ -1,25 +1,31 @@
-node {
-    // Specify the NodeJS tool
-    def nodejsHome = tool name: 'nodejs', type: 'NodeJS'
-
-    stage('Install Dependencies') {
-        // Install dependencies
-        sh "${nodejsHome}/bin/npm install"
+pipeline {
+    agent any
+    tools {
+        nodejs 'nodejs' 
     }
-    
-    stage('Build') {
-        // Build the application
-        echo 'Building the application...'
-    }
-    
-    stage('Test') {
-        // Run tests
-        echo 'All tests passed'
-    }
-    
-    stage('Deploy') {
-        // Deploy the application
-        echo 'Deploying the application...'
-        sh "${nodejsHome}/bin/npm start"
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building the application...'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'All tests passed'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying the application...'
+                script{
+                    sh 'npm start'
+                }
+            }
+        }
     }
 }
