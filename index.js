@@ -1,10 +1,10 @@
 const express = require("express")
 const app = express()
 
-app.get("/", (req,res)=>{
+app.get("/app", (req,res)=>{
 		res.send("Hello World")
 })
 
-app.listen(3000, ()=>{
-		console.log(`Server is running at port : http://localhost:3000`)
+app.listen(8081, ()=>{
+		console.log(`Server is running at port : http://localhost:8081`)
 })
