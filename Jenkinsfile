@@ -1,29 +1,20 @@
 pipeline {
     agent any
     tools {
-        nodejs 'nodejs' 
+        docker 'docker'
     }
     stages {
-        stage('Install Dependencies') {
+        stage('Build Docker Image') {
             steps {
-                sh 'npm install'
-            }
-        }
-        stage('Build') {
-            steps {
-                echo 'Building the application...'
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'All tests passed'
+                echo 'Building Docker image...'
+                sh 'docker build . -t jenkins-cicd'
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying the application...'
-                script{
-                    sh 'npm start'
+                script {
+                    sh 'docker run -d -p 3000:3000 jenkins-cicd'
                 }
             }
         }
